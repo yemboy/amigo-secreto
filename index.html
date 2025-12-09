@@ -145,6 +145,32 @@
             position: relative;
         }
 
+        .best-choice-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: var(--dark-bg);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(0, 255, 136, 0.8);
+            }
+        }
+
         .wish-card::before {
             content: '';
             position: absolute;
@@ -324,9 +350,14 @@
             <div class="profile-pic">🤖</div>
         </div>
 
+        <p style="text-align: center; color: var(--text-secondary); font-size: 13px; margin-bottom: 20px; padding: 0 20px;">
+            <span style="color: var(--accent);">⭐ Top</span> = Productos que más deseo
+        </p>
+
         <div class="wishlist">
             <div class="wish-item" onclick="window.open('https://www.mercadolibre.com.pe/molinillo-electrico-raf-7132-moledor-cafe-granos-semillas-color-plateado/p/MPE47253919?pdp_filters=item_id%3AMPE783799448#origin%3Dshare%26sid%3Dshare%26wid%3DMPE783799448', '_blank')">
                 <div class="wish-card">
+                    <div class="best-choice-badge">⭐ Top</div>
                     <div class="wish-icon">☕</div>
                     <div class="wish-content">
                         <div class="wish-title">Molinillo Eléctrico Raf 7132</div>
@@ -360,6 +391,7 @@
 
             <div class="wish-item" onclick="window.open('https://www.mercadolibre.com.pe/parlante-genius-usb-soundbar-100/p/MPE19480741?pdp_filters=item_id%3AMPE687305802#origin%3Dshare%26sid%3Dshare%26wid%3DMPE687305802', '_blank')">
                 <div class="wish-card">
+                    <div class="best-choice-badge">⭐ Top</div>
                     <div class="wish-icon">🔊</div>
                     <div class="wish-content">
                         <div class="wish-title">Parlante Genius USB SoundBar 100</div>
@@ -393,6 +425,7 @@
 
             <div class="wish-item" onclick="window.open('https://www.mercadolibre.com.pe/billetera-tarjetero-anti-magnetico-anti-clonacion-cuero-pu/up/MPEU2463065474?pdp_filters=item_id%3AMPE620551536#origin%3Dshare%26sid%3Dshare%26wid%3DMPE620551536', '_blank')">
                 <div class="wish-card">
+                    <div class="best-choice-badge">⭐ Top</div>
                     <div class="wish-icon">💳</div>
                     <div class="wish-content">
                         <div class="wish-title">Billetera Tarjetero Anti Magnético</div>
@@ -404,6 +437,7 @@
 
             <div class="wish-item" onclick="window.open('https://caramba.pe/collections/nee-doh?gad_source=1&gad_campaignid=20340438650&gbraid=0AAAAABe38c7C_ygvGV2f2LSxNkzjRx4qa&gclid=Cj0KCQiArt_JBhCTARIsADQZaykfV8A-iEID1OxvxkQuwXv3VQyR2MG4keeMRXAz6JMWSRda_8KTamgaAnRZEALw_wcB', '_blank')">
                 <div class="wish-card">
+                    <div class="best-choice-badge">⭐ Top</div>
                     <div class="wish-icon">🎈</div>
                     <div class="wish-content">
                         <div class="wish-title">Juguetes NeeDoh Anti Estrés</div>

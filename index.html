@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Wish List - IA & Tech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d9ff;
+            --secondary: #ff00ff;
+            --accent: #00ff88;
+            --dark-bg: #0a0e27;
+            --card-bg: #1a1f3a;
+            --text-primary: #e0e0ff;
+            --text-secondary: #a0a0c0;
+            --border-color: #2a2f4a;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a0f35 50%, #0a0e27 100%);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo animado */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            animation: slideDown 0.8s ease-out 0.1s backwards;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            margin: 20px auto;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(255, 0, 255, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            animation: floatUp 3s ease-in-out infinite;
+        }
+
+        .wishlist {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .wish-item {
+            position: relative;
+            cursor: pointer;
+            animation: slideUp 0.6s ease-out backwards;
+        }
+
+        .wish-item:nth-child(1) { animation-delay: 0.1s; }
+        .wish-item:nth-child(2) { animation-delay: 0.2s; }
+        .wish-item:nth-child(3) { animation-delay: 0.3s; }
+        .wish-item:nth-child(4) { animation-delay: 0.4s; }
+        .wish-item:nth-child(5) { animation-delay: 0.5s; }
+        .wish-item:nth-child(6) { animation-delay: 0.6s; }
+        .wish-item:nth-child(7) { animation-delay: 0.7s; }
+
+        .wish-card {
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.8), rgba(42, 47, 74, 0.8));
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .wish-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .wish-item:hover .wish-card {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3), inset 0 0 20px rgba(0, 217, 255, 0.05);
+            transform: translateX(8px);
+            background: linear-gradient(135deg, rgba(26, 31, 58, 1), rgba(42, 47, 74, 1));
+        }
+
+        .wish-item:hover .wish-card::before {
+            left: 100%;
+        }
+
+        .wish-icon {
+            font-size: 28px;
+            min-width: 40px;
+            text-align: center;
+            filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.5));
+        }
+
+        .wish-content {
+            flex: 1;
+        }
+
+        .wish-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+
+        .wish-item:hover .wish-title {
+            color: var(--accent);
+        }
+
+        .wish-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .wish-arrow {
+            font-size: 20px;
+            color: var(--secondary);
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .wish-item:hover .wish-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 18px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: var(--dark-bg);
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatUp {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 16px;
+            }
+
+            .logo {
+                font-size: 36px;
+            }
+
+            .wish-card {
+                padding: 14px 18px;
+            }
+
+            .wish-title {
+                font-size: 14px;
+            }
+
+            .wish-description {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">NEXUS AI</div>
+            <p class="subtitle">✨ Mi Wish List Futurista ✨</p>
+            <div class="profile-pic">🤖</div>
+        </div>
+
+        <div class="wishlist">
+            <div class="wish-item" onclick="window.open('https://www.mercadolibre.com.pe/molinillo-electrico-raf-7132-moledor-cafe-granos-semillas-color-plateado/p/MPE47253919?pdp_filters=item_id%3AMPE783799448#origin%3Dshare%26sid%3Dshare%26wid%3DMPE783799448', '_blank')">
+                <div class="wish-card">
+                    <div class="wish-icon">☕</div>
+                    <div class="wish-content">
+                        <div class="wish-title">Molinillo Eléctrico Raf 7132</div>
+                        <div class="wish-description">Moledor de café, granos y semillas - Color plateado</div>
+                    </div>
+                    <div class="wish-arrow">→</div>
+                </div>
+            </div>
+
+            <div class="wish-item" onclick="window.open('https://www.mercadolibre.com.pe/extension-socket-hoco-ac8-30w-puesto-usb-a-tipo-c-color-negro/p/MPE37802291?pdp_filters=item_id%3AMPE706919182#origin%3Dshare%26sid%3Dshare%26wid%3DMPE706919182', '_blank')">
+                <div class="wish-card">
+                    <div class="wish-icon">🔌</div>
+                    <div class="wish-content">
+                        <div class="wish-title">Extension Socket Hoco AC8 30W</div>
+                        <div class="wish-description">Con puerto USB-A y Tipo-C - Color negro</div>
+                    </div>
+                    <div class="wish-arrow">→</div>
+                </div>
+            </div>
+
+            <div class="wish-item" onclick="window.open('https://www.mercadolibre.com.pe/barra-para-planchas-acero-cromado-flexiones-push-up-bars/up/MPEU2463383502?pdp_filters=item_id%3AMPE628742079#origin%3Dshare%26sid%3Dshare%26wid%3DMPE628742079', '_blank')">
+                <div class="wish-card">
+                    <div class="wish-icon">💪</div>
+                    <div class="wish-content">
+                        <div class="wish-title">Barra Para Planchas Acero Cromado</div>
+                        <div class="wish-description">Flexiones - Push Up Bars</div>
+                    </div>
+                    <div class="wish-arrow">→</div>
+                </div>
+            </div>
+
+            <div class="wish-item" onclick="window.open('https://www.mercadolibre.com.pe/parlante-genius-usb-soundbar-100/p/MPE19480741?pdp_filters=item_id%3AMPE687305802#origin%3Dshare%26sid%3Dshare%26wid%3DMPE687305802', '_blank')">
+                <div class="wish-card">
+                    <div class="wish-icon">🔊</div>
+                    <div class="wish-content">
+                        <div class="wish-title">Parlante Genius USB SoundBar 100</div>
+                        <div class="wish-description">Barra de sonido USB para PC</div>
+                    </div>
+                    <div class="wish-arrow">→</div>
+                </div>
+            </div>
+
+            <div class="wish-item" onclick="window.open('https://www.mercadolibre.com.pe/destornillador-electrico-inalambrico-recargable-kit/up/MPEU1990494601?pdp_filters=item_id%3AMPE633537583#origin%3Dshare%26sid%3Dshare%26wid%3DMPE633537583', '_blank')">
+                <div class="wish-card">
+                    <div class="wish-icon">🔧</div>
+                    <div class="wish-content">
+                        <div class="wish-title">Destornillador Eléctrico Inalámbrico</div>
+                        <div class="wish-description">Recargable con kit de accesorios</div>
+                    </div>
+                    <div class="wish-arrow">→</div>
+                </div>
+            </div>
+
+            <div class="wish-item" onclick="window.open('https://www.mercadolibre.com.pe/llavero-pop-roronoa-zoro-one-piece/up/MPEU3584229522?pdp_filters=item_id%3AMPE886077130#origin%3Dshare%26sid%3Dshare%26wid%3DMPE886077130', '_blank')">
+                <div class="wish-card">
+                    <div class="wish-icon">⚔️</div>
+                    <div class="wish-content">
+                        <div class="wish-title">Llavero Pop Roronoa Zoro One Piece</div>
+                        <div class="wish-description">Coleccionable de One Piece - Zoro</div>
+                    </div>
+                    <div class="wish-arrow">→</div>
+                </div>
+            </div>
+
+            <div class="wish-item" onclick="window.open('https://www.mercadolibre.com.pe/billetera-tarjetero-anti-magnetico-anti-clonacion-cuero-pu/up/MPEU2463065474?pdp_filters=item_id%3AMPE620551536#origin%3Dshare%26sid%3Dshare%26wid%3DMPE620551536', '_blank')">
+                <div class="wish-card">
+                    <div class="wish-icon">💳</div>
+                    <div class="wish-content">
+                        <div class="wish-title">Billetera Tarjetero Anti Magnético</div>
+                        <div class="wish-description">Anti clonación - Cuero PU</div>
+                    </div>
+                    <div class="wish-arrow">→</div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Hecho con <span style="color: var(--secondary);">❤️</span> y <span style="color: var(--primary);">⚡</span></p>
+            <div class="social-links">
+                <div class="social-link" onclick="alert('GitHub Profile')">🐙</div>
+                <div class="social-link" onclick="alert('Twitter/X')">𝕏</div>
+                <div class="social-link" onclick="alert('LinkedIn')">💼</div>
+                <div class="social-link" onclick="alert('Email')">📧</div>
+            </div>
+            <p style="margin-top: 20px; opacity: 0.7;">© 2025 - Powered by IA & Tecnología</p>
+        </footer>
+    </div>
+
+    <script>
+        // Agregar interactividad a los items
+        document.querySelectorAll('.wish-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.querySelector('.wish-title').textContent;
+                console.log(`Visitando: ${title}`);
+                // Aquí puedes agregar lógica para abrir links, guardar favoritos, etc.
+            });
+        });
+
+        // Efecto de cursos personalizado
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.wish-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                card.style.setProperty('--x', x + 'px');
+                card.style.setProperty('--y', y + 'px');
+            });
+        });
+    </script>
+</body>
+</html>
